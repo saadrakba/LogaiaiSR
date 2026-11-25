@@ -1,0 +1,23 @@
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: logiai-api:1.0
+    env_file:
+      - .env
+    expose:
+      - "8000"
+    restart: unless-stopped
+
+  web:
+    build:
+      context: .
+      dockerfile: web/Dockerfile
+    image: logiai-web:1.0
+    ports:
+      - "8080:80"
+    depends_on:
+      - api
+    restart: unless-stopped
